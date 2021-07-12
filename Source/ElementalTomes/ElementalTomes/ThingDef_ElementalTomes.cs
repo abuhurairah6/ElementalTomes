@@ -3,20 +3,39 @@ using Verse;
 
 namespace ElementalTomes
 {
-    public class ThingDef_ElementalTomes : ThingDef
+    public class Verb_CastMagic : Verb_Shoot
     {
-        public float AddHediffChance;
-        public HediffDef HediffToAdd;
+        #region Overrides
+        public override void WarmupComplete()
+        {
+            base.WarmupComplete();
+            Pawn pawn = this.caster as Pawn;
+            HediffDef fatigueDef = DefDatabase<HediffDef>.GetNamed("ET_Fatigue");
+            var fatigueOnPawn = pawn?.health?.hediffSet?.GetFirstHediffOfDef(fatigueDef);
+            Log.Message("Running warmupcomplete");
+            var randomSeverity = Rand.Range(0.01f, 0.02f);
+            if (fatigueOnPawn != null)
+            {
+                fatigueOnPawn.Severity += randomSeverity;
+            }
+            else
+            {
+                Hediff hediff = HediffMaker.MakeHediff(fatigueDef, pawn, null);
+                hediff.Severity = randomSeverity;
+                pawn.health.AddHediff(hediff, null, null);
+            }
+        }
+        #endregion Overrides
     }
 
     public class Projectile_ElementalTomes : Projectile_Explosive
     {
         #region Properties
-        public ThingDef_ElementalTomes Def
+        public ThingDef Def
         {
             get
             {
-                return this.def as ThingDef_ElementalTomes;
+                return this.def as ThingDef;
             }
         }
         #endregion Properties
@@ -26,7 +45,8 @@ namespace ElementalTomes
         {
             IntVec3 strikeLoc = base.Position;
             this.Destroy(DestroyMode.Vanish);
-            Find.CurrentMap.weatherManager.eventHandler.AddEvent(new ElementalEvent_LightningStrike(Find.CurrentMap, strikeLoc, def));
+            //Log.Message("Exploded: Call lightning");
+            Find.CurrentMap.weatherManager.eventHandler.AddEvent(new ElementalEvent_LightningStrike(Find.CurrentMap, strikeLoc, this.def, this.launcher));
         }
         #endregion Override
     }

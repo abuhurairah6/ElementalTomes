@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <SkillDef>
+    <defName>ET_Magic</defName>
+    <description>Magical capabilities, indicates effectiveness when wielding tomes in combat.</description>
+    <skillLabel>magic</skillLabel>
+    <pawnCreatorSummaryVisible>true</pawnCreatorSummaryVisible>
+    <disablingWorkTags>Violent</disablingWorkTags>
+    <neverDisabledBasedOnWorkTypes>true</neverDisabledBasedOnWorkTypes>
+    <listOrder>105</listOrder>
+  </SkillDef>
+</Defs>

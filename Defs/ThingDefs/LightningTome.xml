@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
+  <!-- ==================== Base Definitions ========================== -->
   <ThingDef Name="BaseMakeableTome" ParentName="BaseWeapon" Abstract="True">
     <weaponClasses>
       <li>Ranged</li>
@@ -15,6 +16,40 @@
       </recipeUsers>
       <unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
     </recipeMaker>
+  </ThingDef>
+
+  <ThingDef Name="BaseTomeProjectile" Abstract="True">
+    <category>Projectile</category>
+    <altitudeLayer>Projectile</altitudeLayer>
+    <thingClass>Projectile_Explosive</thingClass>
+    <label>projectile</label>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>False</useHitPoints>
+    <neverMultiSelect>True</neverMultiSelect>
+    <graphicData>
+      <shaderType>Transparent</shaderType>
+    </graphicData>
+    <projectile>
+      <arcHeightFactor>0</arcHeightFactor>
+      <shadowSize>0</shadowSize>
+    </projectile>
+  </ThingDef>
+
+  <!-- ==================== Lightning Tome Projectile ========================== -->
+  <ThingDef Name="BaseLightningTomeProjectile" ParentName="BaseTomeProjectile" Abstract="True">
+    <thingClass>ElementalTomes.Projectile_ElementalTomes</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Grenade</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <explosionRadius>1.9</explosionRadius >
+      <!-- Use default damage from explosion def -->
+      <damageDef>Flame</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <explosionDelay>150</explosionDelay>
+      <speed>24</speed>
+    </projectile>
   </ThingDef>
   
   <!-- ==================== Lightning Tome ========================== -->
@@ -52,18 +87,17 @@
     <verbs>
       <li>
         <label>calls lightning strike</label>
-        <verbClass>Verb_LaunchProjectile</verbClass>
+        <verbClass>ElementalTomes.Verb_CastMagic</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
-        <range>12.9</range>
+        <range>20.9</range>
         <forcedMissRadius>1.9</forcedMissRadius>
         <warmupTime>1.5</warmupTime>
         <noiseRadius>4</noiseRadius>
-        <ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
         <soundCast>ThrowGrenade</soundCast>
         <targetParams>
           <canTargetLocations>true</canTargetLocations>
         </targetParams>
-        <defaultProjectile>Proj_GrenadeFrag</defaultProjectile>
+        <defaultProjectile>Proj_TomeLightning</defaultProjectile>
         <rangedFireRulepack>Combat_RangedFire_Thrown</rangedFireRulepack>
       </li>
     </verbs>
@@ -76,22 +110,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef Name="BaseFragGrenadeProjectile" ParentName="BaseGrenadeProjectile" Abstract="True">
-    <thingClass>ElementalTomes.Projectile_ElementalTomes</thingClass>
-    <graphicData>
-      <texPath>Things/Projectile/Grenade</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-    </graphicData>
-    <projectile>
-      <explosionRadius>1.9</explosionRadius >
-      <damageDef>Flame</damageDef>
-      <!-- Use default damage from explosion def -->
-      <explosionDelay>100</explosionDelay>
-    </projectile>
-  </ThingDef>
-
-  <ThingDef ParentName="BaseFragGrenadeProjectile">
-    <defName>Proj_GrenadeFrag</defName>
+  <ThingDef ParentName="BaseLightningTomeProjectile">
+    <defName>Proj_TomeLightning</defName>
     <label>lightning tome</label>
   </ThingDef>
 
