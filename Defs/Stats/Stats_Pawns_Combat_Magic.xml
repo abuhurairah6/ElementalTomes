@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <StatDef>
+    <defName>ET_MagicDPS</defName>
+    <workerClass>StatWorker</workerClass>
+    <label>magic DPS</label>
+    <description>Average base damage per second in casting magics.</description>
+    <category>PawnCombat</category>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0.5</minValue>
+    <toStringStyle>FloatTwo</toStringStyle>
+    <forInformationOnly>true</forInformationOnly>
+    <skillNeedOffsets>
+      <li Class="SkillNeed_BaseBonus">
+        <skill>ET_Magic</skill>
+        <baseValue>-1</baseValue>
+        <bonusPerLevel>0.2</bonusPerLevel>
+      </li>
+    </skillNeedOffsets>
+    <displayPriorityInCategory>3900</displayPriorityInCategory>
+    <showOnAnimals>false</showOnAnimals>
+  </StatDef>
+  
+  <StatDef>
+    <defName>ET_ChannellingDelayFactor</defName>
+    <label>channeling time</label>
+    <description>How long it takes to cast magic after choosing a target.</description>
+    <category>PawnCombat</category>
+    <displayPriorityInCategory>3800</displayPriorityInCategory>
+    <defaultBaseValue>2</defaultBaseValue>
+    <minValue>0.01</minValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <skillNeedOffsets>
+      <li Class="SkillNeed_BaseBonus">
+        <skill>ET_Magic</skill>
+        <baseValue>0</baseValue>
+        <bonusPerLevel>-0.075</bonusPerLevel>
+      </li>
+    </skillNeedOffsets>
+    <!--<capacityOffsets>
+      <li>
+        <capacity>Manipulation</capacity>
+        <scale>12</scale>
+        <max>1.5</max>
+      </li>
+      <li>
+        <capacity>Sight</capacity>
+        <scale>12</scale>
+        <max>1.5</max>
+      </li>
+    </capacityOffsets>-->
+    <!--<postProcessCurve>
+      <points>
+        <li>(-20, 0.05)</li>
+        <li>(-10, 0.10)</li>
+        <li>(0.0, 0.50)</li>
+        <li>(10, 0.80)</li>
+        <li>(20, 0.90)</li>
+        <li>(40, 0.96)</li>
+        <li>(60, 0.98)</li>
+      </points>
+    </postProcessCurve>-->
+    <showOnAnimals>false</showOnAnimals>
+  </StatDef>
+
+</Defs>

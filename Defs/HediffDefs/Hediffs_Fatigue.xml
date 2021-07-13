@@ -6,7 +6,6 @@
     <description>Feeling of tiredness/weariness. May be sudden or gradual in onset. Caused by practice and incantations of magic. May be resolved completely with rest. However, prolonged and chronic exposure may indirectly induce coma among magic practitioners.</description>
     <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
     <hediffClass>HediffWithComps</hediffClass>
-    <lethalSeverity>1.1</lethalSeverity>
     <comps>
       <li Class="HediffCompProperties_Effecter">
         <stateEffecter>Drunk</stateEffecter>

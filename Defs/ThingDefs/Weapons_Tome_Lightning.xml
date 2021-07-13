@@ -45,7 +45,7 @@
     <projectile>
       <explosionRadius>1.9</explosionRadius >
       <!-- Use default damage from explosion def -->
-      <damageDef>Flame</damageDef>
+      <damageDef>Magic</damageDef>
       <damageAmountBase>10</damageAmountBase>
       <explosionDelay>150</explosionDelay>
       <speed>24</speed>
