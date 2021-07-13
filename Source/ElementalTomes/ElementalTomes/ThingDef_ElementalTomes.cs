@@ -3,31 +3,6 @@ using Verse;
 
 namespace ElementalTomes
 {
-    public class Verb_CastMagic : Verb_Shoot
-    {
-        #region Overrides
-        public override void WarmupComplete()
-        {
-            base.WarmupComplete();
-            Pawn pawn = this.caster as Pawn;
-            HediffDef fatigueDef = DefDatabase<HediffDef>.GetNamed("ET_Fatigue");
-            var fatigueOnPawn = pawn?.health?.hediffSet?.GetFirstHediffOfDef(fatigueDef);
-            Log.Message("Running warmupcomplete");
-            var randomSeverity = Rand.Range(0.01f, 0.02f);
-            if (fatigueOnPawn != null)
-            {
-                fatigueOnPawn.Severity += randomSeverity;
-            }
-            else
-            {
-                Hediff hediff = HediffMaker.MakeHediff(fatigueDef, pawn, null);
-                hediff.Severity = randomSeverity;
-                pawn.health.AddHediff(hediff, null, null);
-            }
-        }
-        #endregion Overrides
-    }
-
     public class Projectile_ElementalTomes : Projectile_Explosive
     {
         #region Properties

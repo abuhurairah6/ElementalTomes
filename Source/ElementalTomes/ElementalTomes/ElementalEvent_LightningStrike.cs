@@ -11,7 +11,7 @@ namespace ElementalTomes
         private IntVec3 strikeLoc = IntVec3.Invalid;
         private ThingDef def;
         private Thing launcher;
-        private Mesh boltMesh;
+        private Mesh boltMesh = LightningBoltMeshPool.RandomBoltMesh;
         private static readonly Material LightningMat = MatLoader.LoadMat("Weather/LightningBolt", -1);
 
         public ElementalEvent_LightningStrike(Map map, IntVec3 forcedStrikeLoc, ThingDef hediffDef, Thing launcher) : base(map)
@@ -29,17 +29,15 @@ namespace ElementalTomes
             {
                 this.strikeLoc = CellFinderLoose.RandomCellWith((IntVec3 sq) => sq.Standable(this.map) && !this.map.roofGrid.Roofed(sq), this.map, 1000);
             }
-            this.boltMesh = LightningBoltMeshPool.RandomBoltMesh;
             if (!this.strikeLoc.Fogged(this.map))
             {
                 Pawn pawn;
                 pawn = (this.launcher as Pawn);
-                SkillDef magicDef = DefDatabase<SkillDef>.GetNamed("ET_Magic");
-                int magic = Mathf.Max(pawn.skills.GetSkill(magicDef).Level, 1);
+                int magic = (int) pawn.GetStatValue(DefDatabase<StatDef>.GetNamed("ET_MagicDPS"), true);
 
                 float explosionRadius = this.def.projectile.explosionRadius;
                 DamageDef damageDef = this.def.projectile.damageDef;
-                int damageAmount = this.def.projectile.GetDamageAmount(1f, null) * magic / 10;
+                int damageAmount = this.def.projectile.GetDamageAmount(1f, null) * magic;
                 float armorPenetration = this.def.projectile.GetArmorPenetration(1f, null);
                 ThingDef postExplosionSpawnThingDef = this.def.projectile.postExplosionSpawnThingDef;
                 float postExplosionSpawnChance = this.def.projectile.postExplosionSpawnChance;
@@ -53,7 +51,7 @@ namespace ElementalTomes
                 Log.Message("Magic is " + magic.ToString());
                 Log.Message("Damage is " + damageAmount.ToString());
                 Log.Message("Damage base is " + this.def.projectile.GetDamageAmount(1f, null).ToString());
-                GenExplosion.DoExplosion(this.strikeLoc, this.map, explosionRadius, damageDef, this.launcher, 
+                GenExplosion.DoExplosion(this.strikeLoc, this.map, explosionRadius, damageDef, null, 
                     damageAmount, armorPenetration, null, null, null, 
                     null, postExplosionSpawnThingDef, postExplosionSpawnChance, postExplosionSpawnThingCount, applyDamageToExplosionCellsNeighbors, 
                     preExplosionSpawnThingDef, preExplosionSpawnChance, preExplosionSpawnThingCount, explosionChanceToStartFire, explosionDamageFalloff, 
@@ -66,7 +64,6 @@ namespace ElementalTomes
                     FleckMaker.ThrowMicroSparks(loc, this.map);
                     FleckMaker.ThrowLightningGlow(loc, this.map, 1.5f);
                 }
-                pawn.skills.Learn(magicDef, 100f, false);
             }
             SoundInfo info = SoundInfo.InMap(new TargetInfo(this.strikeLoc, this.map, false), MaintenanceType.None);
             SoundDefOf.Thunder_OnMap.PlayOneShot(info);

@@ -235,6 +235,7 @@
     <Compile Include="ElementalEvent_LightningStrike.cs" />
     <Compile Include="ThingDef_ElementalTomes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Verb_CastMagic.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
