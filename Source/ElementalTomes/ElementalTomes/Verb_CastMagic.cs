@@ -45,10 +45,10 @@ namespace ElementalTomes
             {
                 return false;
             }
-            //if (this.CausesTimeSlowdown(castTarg))
-            //{
-            //    Find.TickManager.slower.SignalForceNormalSpeed();
-            //}
+            if (this.CausesTimeSlowdown(castTarg))
+            {
+                Find.TickManager.slower.SignalForceNormalSpeed();
+            }
             this.surpriseAttack = surpriseAttack;
             this.canHitNonTargetPawnsNow = canHitNonTargetPawns;
             this.preventFriendlyFire = preventFriendlyFire;
@@ -78,5 +78,25 @@ namespace ElementalTomes
             return true;
         }
         #endregion Overrides
+
+        private bool CausesTimeSlowdown(LocalTargetInfo castTarg)
+        {
+            if (!this.verbProps.CausesTimeSlowdown)
+            {
+                return false;
+            }
+            if (!castTarg.HasThing)
+            {
+                return false;
+            }
+            Thing thing = castTarg.Thing;
+            if (thing.def.category != ThingCategory.Pawn && (thing.def.building == null || !thing.def.building.IsTurret))
+            {
+                return false;
+            }
+            Pawn pawn = thing as Pawn;
+            bool flag = pawn != null && pawn.Downed;
+            return (thing.Faction == Faction.OfPlayer && this.caster.HostileTo(Faction.OfPlayer)) || (this.caster.Faction == Faction.OfPlayer && thing.HostileTo(Faction.OfPlayer) && !flag);
+        }
     }
 }

@@ -32,6 +32,7 @@
     <projectile>
       <arcHeightFactor>0</arcHeightFactor>
       <shadowSize>0</shadowSize>
+      <flyOverhead>true</flyOverhead>
     </projectile>
   </ThingDef>
 
@@ -56,7 +57,7 @@
   <ThingDef ParentName="BaseMakeableTome">
     <defName>ET_LightningTome</defName>
     <label>lightning tome</label>
-    <description>Old-school fragmentation grenades. They can be thrown a short distance, where they'll explode, damaging anything and anyone nearby.</description>
+    <description>Standard lightning tome. Calls lightning strike.</description>
     <recipeMaker>
       <researchPrerequisite>Machining</researchPrerequisite>
     </recipeMaker>
@@ -115,4 +116,62 @@
     <label>lightning tome</label>
   </ThingDef>
 
+  <!-- ==================== Lightning Tome ========================== -->
+  <ThingDef ParentName="BaseMakeableTome">
+    <defName>ET_BoltingTome</defName>
+    <label>bolting tome</label>
+    <description>Standard Bolting tome. Long-ranged, by slightly inaccurate.</description>
+    <recipeMaker>
+      <researchPrerequisite>Machining</researchPrerequisite>
+    </recipeMaker>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Item/Equipment/WeaponRanged/Grenades</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <uiIconScale>1.3</uiIconScale>
+    <soundInteract>Interact_Grenade</soundInteract>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <Mass>1</Mass>
+      <RangedWeapon_Cooldown>2.66</RangedWeapon_Cooldown>
+      <WorkToMake>12000</WorkToMake>
+    </statBases>
+    <costList>
+      <Steel>20</Steel>
+      <Chemfuel>80</Chemfuel>
+    </costList>
+    <weaponTags>
+      <li>GrenadeDestructive</li>
+      <li>EmpireGrenadeDestructive</li>
+    </weaponTags>
+    <thingCategories>
+      <li>Grenades</li>
+    </thingCategories>
+    <verbs>
+      <li>
+        <label>calls lightning strike</label>
+        <verbClass>ElementalTomes.Verb_CastMagic</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <range>40.9</range>
+        <forcedMissRadius>2.9</forcedMissRadius>
+        <warmupTime>1.5</warmupTime>
+        <noiseRadius>4</noiseRadius>
+        <soundCast>ThrowGrenade</soundCast>
+        <targetParams>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+        <defaultProjectile>Proj_TomeLightning</defaultProjectile>
+        <rangedFireRulepack>Combat_RangedFire_Thrown</rangedFireRulepack>
+          <requireLineOfSight>False</requireLineOfSight>
+      </li>
+    </verbs>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>2.66</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+        <requiredDamageTypeToExplode>Flame</requiredDamageTypeToExplode>
+      </li>
+    </comps>
+  </ThingDef>
 </Defs>
